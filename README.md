@@ -128,6 +128,32 @@ Es importante que `expect` este definido antes de la solicitud GET porque `expec
 ![](./imgs/Failure1.png)
 
 ## Paso 3
+Ahora, modificamos la 2da prueba:
+
+```ruby
+it 'selects the Search Results template for rendering' do
+  fake_results = [double('movie1'), double('movie2')]
+  allow(Movie).to receive(:find_in_tmdb).and_return(fake_results)
+  get :search_tmdb, {:search_terms => 'hardware'}
+  expect(response).to render_template('search_tmdb')
+end
+```
+
+Esta prueba, mediante `response` y `render_template` verificará si al llamar al metodo del controlador con los parámetros definidos se renderiza la vista `search_tmdb`. Al ya tener definida la ruta podemos observar que la prueba pasa satisfactoriamente.
+
+![](./imgs/Prueba2Check.png)
+
+Ahora, podemos refactorizar las pruebas para que antes de cada una de estas se creen los mocks, así no caemos en repeticiones innecesarias de código.
+
+```ruby
+describe 'seatching TMDb' do
+    before :each do
+      @fake_results = [double('movie1'), double('movie2')]
+    end
+# [...]
+```
+
+
 
 
 
