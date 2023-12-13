@@ -85,6 +85,50 @@ Y ahora inicializamos Guard para que pueda observar los cambios en `/spec` y rea
 
 ## Paso 2
 
+Modificamos una de las pruebas de la siguiente manera:
+
+```ruby
+it 'calls the model method that performs TMDb search' do
+    get :search_tmdb, {:search_terms => 'hardware'}
+end
+```
+
+Guard ejecutara la prueba automaticamente, y observaremos que esta prueba ya esta en verde, pues ya tenemos una ruta `get /search_tmdb` y una accion del controlador definida para esta ruta.
+
+![](./imgs/Prueba1Check.png)
+
+Volvemos a modificar esta prueba, ahora de la siguiente manera:
+
+```ruby
+it 'calls the model method that performs TMDb search' do
+    fake_results = [double('movie1'), double('movie2')]
+    expect(Movie).to receive(:find_in_tmdb).with('hardware').and_return(fake_results)
+    get :search_tmdb, {:search_terms => 'hardware'}
+end
+```
+
+Observamos que esta prueba falla:
+
+![](./imgs/Failure1.png)
+
+Esta prueba falla porque espera que la accion del controlador llame al metodo `find_in_tmdb` del modelo para `Movie`, pero nuestra accion del controlador esta vacia. Si modificamos la acción `search_tmdb` de MoviesController para que llame a este método del modelo, nuestra prueba pasará. 
+
+```ruby
+def search_tmdb
+    @movies = Movie.find_in_tmdb(params[:search_terms])
+end
+```
+
+![](./imgs/Prueba1Check.png)
+
+No es necesario todavía verificar la implementación de `find_in_tmdb` porque estamos utilizando **mocks** para simular su comportamiento.
+
+Es importante que `expect` este definido antes de la solicitud GET porque `expect` establece la expectativa despues de su definición en adelante. Si se tiene la solicitud GET antes, esta se procesará y culminará antes de siquiera haber definido el `expect`, y por tanto el comportamiento deseado no sera capturado. Si invertimos el orden de estas sentencias observamos que la prueba falla:
+
+![](./imgs/Failure1.png)
+
+## Paso 3
+
 
 
 
