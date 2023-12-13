@@ -153,7 +153,12 @@ describe 'seatching TMDb' do
 # [...]
 ```
 
+Además, podemos tener suposiciones anidadas, para asi aminorar aun mas la repetición de código.
 
+![](./imgs/SuposAnid.png)
+
+Verificamos ahora que todas las pruebas pasan de manera satisfactoria.
+![](./imgs/Allchecks.png)
 
 
 

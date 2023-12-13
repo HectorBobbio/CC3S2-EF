@@ -17,21 +17,30 @@ end
 
 describe MoviesController do
   describe 'seatching TMDb' do
+
+    # Suposicion #1
     before :each do
       @fake_results = [double('movie1'), double('movie2')]
     end
     it 'calls the model method that performs TMDb search' do
-
       expect(Movie).to receive(:find_in_tmdb).with('hardware').
       and_return(@fake_results)
       get :search_tmdb, {:search_terms => 'hardware'}
     end
-    it 'selects the Search Results template for rendering' do
 
-      allow(Movie).to receive(:find_in_tmdb).and_return(@fake_results)
-      get :search_tmdb, {:search_terms => 'hardware'}
-      expect(response).to render_template('search_tmdb')
+    describe 'after valid search' do
+      # Suposicion #2 anidada
+      before :each do
+        allow(Movie).to receive(:find_in_tmdb).and_return(@fake_results)
+        get :search_tmdb, {:search_terms => "hardware"}
+      end
+
+      it 'selects the Search Results template for rendering' do
+        expect(response).to render_template('search_tmdb')
+      end
+      it 'makes the TMDb search results available to that template' do
+        expect(assigns(:movies)).to eq(@fake_results)
+      end
     end
-    it 'makes the TMDb search results available to that template'
   end
 end
