@@ -75,6 +75,16 @@ Además, vamos dando forma a las pruebas de esta accion del controlador en `spec
 
 ![](./imgs/test1.png)  
 
+Al usar `bundle exec rspec` nos mostraran estos tests con implementacion pendiente
+
+![](./imgs/testpendiente.png)
+
+Y ahora inicializamos Guard para que pueda observar los cambios en `/spec` y realice las pruebas de manera automática
+
+![](./imgs/guard.png)
+
+## Paso 2
+
 
 
 
