@@ -55,3 +55,26 @@ Ahora, si intentamos guardar usuarios con usernames muy largos o que empiezan co
 
 # Parte 2
 
+## Paso 1  
+Editamos la vista correspondiente para `search_tmdb.html.erb` para configurar el formulario de busqueda y un boton para regresar a la pagina de inicio, y un boton en la pantalla de inicio para ir al formulario de busqueda de `search_tmdb`.
+
+Configuracion del formulario:
+![](./imgs/form_tag.png)  
+
+Boton de regreso a Inicio:
+![](./imgs/search_tmdb_button.png)
+![](./imgs/boton1.png)  
+
+Boton de busqueda en Inicio:
+![](./imgs/search_tmdb_button.png)  
+![](./imgs/boton2.png)
+
+Ademas, para que se muestre al usuario agregamos la ruta `get '/search_tmdb' => 'movies#search_tmdb'` asi como una accion del controlador movies llamada `search_tmdb` para poder renderizar esta vista.
+
+Además, vamos dando forma a las pruebas de esta accion del controlador en `spec/controllers/movie_controller_spec.rb`
+
+![](./imgs/test1.png)  
+
+
+
+
